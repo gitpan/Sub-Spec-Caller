@@ -1,0 +1,51 @@
+NAME
+    Sub::Spec::Caller - Call subroutines
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+     use Sub::Spec::Caller qw(call_sub);
+     my $res = call_sub(
+         "My::Module",
+         "my_func",
+         {arg1=>1, arg2=>2},
+         {convert_datetime_objects=>1}, # call options
+     );
+
+DESCRIPTION
+    This module provides one sub: call_sub.
+
+  call_sub($module, $func, $args, \%opts) => $resp
+    This is basically just a shorthand for loading the module and calling
+    the subroutine, but with some options. It traps exceptions and return
+    [500, ...] instead.
+
+    Available options:
+
+    *   load => BOOL (default 1)
+
+        If set to 0, do not try to load the module. Thus, you need to load
+        the module manually beforehand.
+
+    *   convert_datetime_objects => BOOL (default 0)
+
+        Convert datetime objects to Unix epoch time. This might be useful
+        when passing result to JSON/YAML for other languages.
+
+    For minimum overhead, you should load modules and call functions
+    directly. call_sub() is mainly used by Sub::Spec::HTTP::Server which
+    passes the result into JSON/YAML/etc for external purposes.
+
+SEE ALSO
+    Sub::Spec::Runner
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
